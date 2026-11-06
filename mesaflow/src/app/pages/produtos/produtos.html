@@ -1,0 +1,18 @@
+<h2>Cardápio MesaFlow</h2>
+
+<div class="produtos-container">
+    @for (produto of produtos; track produto.id) {
+        <div class="produto-card">
+
+            <h3>{{ produto.nome }}</h3>
+
+            <p>{{ produto.descricao }}</p>
+
+            <strong>
+                {{ produto.preco | currency:'BRL'}}
+            </strong>
+
+            <button (click)="adicionarAoCarrinho(produto)">Adicionar ao carrinho</button>
+        </div>
+    }
+</div>
