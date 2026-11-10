@@ -1,0 +1,121 @@
+<section class="pagina-servicos">
+  <div class="cabecalho">
+    <div>
+      <h1>Gerenciamento de Serviços</h1>
+      <p>Cadastre e gerencie os serviços do MesaFlow.</p>
+    </div>
+
+    <button type="button" (click)="novo()">+ Novo serviço</button>
+  </div>
+
+  @if (mensagem) {
+    <p class="sucesso">{{ mensagem }}</p>
+  }
+
+  @if (erro) {
+    <p class="erro">{{ erro }}</p>
+  }
+
+  @if (mostrarFormulario) {
+    <form class="formulario" (ngSubmit)="salvar()">
+      <h2>{{ idEdicao === null ? 'Novo serviço' : 'Editar serviço' }}</h2>
+
+      <label>
+        Nome
+        <input name="nome" [(ngModel)]="formulario.nome" required />
+      </label>
+
+      <label>
+        Descrição
+        <textarea name="descricao" [(ngModel)]="formulario.descricaoItem"></textarea>
+      </label>
+
+      <label>
+        ID da categoria
+        <input
+          type="number"
+          name="categoria"
+          [(ngModel)]="formulario.idCategoria"
+          min="1"
+          required
+        />
+      </label>
+
+      <label>
+        Preço
+        <input
+          type="number"
+          name="preco"
+          [(ngModel)]="formulario.preco"
+          min="0"
+          step="0.01"
+          required
+        />
+      </label>
+
+      <label>
+        Situação
+        <select name="situacao" [(ngModel)]="formulario.ativoProdutoServico">
+          <option value="A">Ativo</option>
+          <option value="N">Inativo</option>
+        </select>
+      </label>
+
+      <div class="acoes">
+        <button type="submit" [disabled]="salvando">
+          {{ salvando ? 'Salvando...' : 'Salvar' }}
+        </button>
+
+        <button type="button" (click)="cancelar()">Cancelar</button>
+      </div>
+    </form>
+  }
+
+  <div class="pesquisa">
+    <input type="search" placeholder="Pesquisar serviço..." [(ngModel)]="pesquisa" />
+  </div>
+
+  @if (carregando) {
+    <p>Carregando serviços...</p>
+  } @else {
+    <div class="tabela-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Serviço</th>
+            <th>Preço</th>
+            <th>Situação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (servico of servicosFiltrados; track servico.idItem) {
+            <tr>
+              <td>{{ servico.idItem }}</td>
+              <td>{{ servico.nome }}</td>
+              <td>{{ servico.preco | currency: 'BRL' }}</td>
+              <td>
+                {{ servico.ativoProdutoServico === 'A' ? 'Ativo' : 'Inativo' }}
+              </td>
+              <td class="acoes">
+                <button type="button" (click)="editar(servico)">Editar</button>
+
+                @if (servico.ativoProdutoServico === 'A') {
+                  <button type="button" class="desativar" (click)="desativar(servico)">
+                    Desativar
+                  </button>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5">Nenhum serviço encontrado.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

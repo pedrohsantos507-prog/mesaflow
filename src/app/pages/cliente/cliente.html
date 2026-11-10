@@ -1,0 +1,48 @@
+
+<section class="clientes-container">
+
+  <h1>Clientes cadastrados</h1>
+
+  @if (carregando) {
+    <p>Carregando clientes...</p>
+  }
+
+  @if (erro) {
+    <p class="erro">{{ erro }}</p>
+  }
+
+  @if (!carregando && !erro) {
+
+    <div class="tabela-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Situação</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (pessoa of pessoas; track pessoa.idPessoa) {
+            <tr>
+              <td>{{ pessoa.idPessoa }}</td>
+              <td>{{ pessoa.nome }}</td>
+              <td>{{ pessoa.email }}</td>
+              <td>{{ pessoa.telefone }}</td>
+              <td>{{ pessoa.ativoPessoa }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5">Nenhum cadastro encontrado.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+  }
+
+</section>

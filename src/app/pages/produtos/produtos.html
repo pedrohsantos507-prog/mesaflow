@@ -1,0 +1,72 @@
+<h2>Catálogo MesaFlow</h2>
+
+<section class="filtros">
+  <div class="campo-pesquisa">
+    <label for="pesquisa">Pesquisar</label>
+
+    <input
+      id="pesquisa"
+      type="text"
+      placeholder="Pesquisar por nome..."
+      [ngModel]="pesquisa()"
+      (ngModelChange)="pesquisa.set($event)"
+    />
+  </div>
+
+  <div class="campo-filtro">
+    <label for="tipo">Tipo</label>
+
+    <select id="tipo" [ngModel]="tipoSelecionado()" (ngModelChange)="tipoSelecionado.set($event)">
+      <option value="Todos">Todos os tipos</option>
+      <option value="P">Produtos</option>
+      <option value="S">Serviços</option>
+    </select>
+  </div>
+
+  <div class="campo-filtro">
+    <label for="categoria">Categoria</label>
+
+    <select
+      id="categoria"
+      [ngModel]="categoriaSelecionada()"
+      (ngModelChange)="categoriaSelecionada.set($event)"
+    >
+      <option value="Todas">Todas as categorias</option>
+    </select>
+  </div>
+</section>
+@if (carregando()) {
+  <p>Carregando catálogo...</p>
+}
+
+@if (erro()) {
+  <p>{{ erro() }}</p>
+
+  <button (click)="carregarProdutos()">Tentar novamente</button>
+}
+
+@if (!carregando() && !erro()) {
+  @if (produtosFiltrados().length === 0) {
+    <p>Nenhum item encontrado.</p>
+  }
+
+  <div class="lista-produtos">
+    @for (produto of produtosFiltrados(); track produto.id) {
+      <div class="produto-card">
+        <h3>{{ produto.nome }}</h3>
+
+        <p>
+          {{ produto.tipo === 'P' ? 'Produto' : 'Serviço' }}
+        </p>
+
+        <p>{{ produto.descricao }}</p>
+
+        <p class="preco">
+          {{ produto.preco | currency: 'BRL' }}
+        </p>
+        <a [routerLink]="['/produtos', produto.id]"> Ver detalhes </a>
+        <button (click)="adicionarAoCarrinho(produto)">Adicionar ao carrinho</button>
+      </div>
+    }
+  </div>
+}

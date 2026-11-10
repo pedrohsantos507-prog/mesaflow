@@ -1,0 +1,63 @@
+
+<section class="pedidos-container">
+
+  <h1>Meus Pedidos</h1>
+  <p>Acompanhe seus pedidos realizados no MesaFlow.</p>
+
+  @if (carregando) {
+    <p>Carregando pedidos...</p>
+  }
+
+  @if (erro) {
+    <p class="erro">{{ erro }}</p>
+  }
+
+  @if (!carregando && !erro && pedidos.length === 0) {
+    <p>Você ainda não realizou nenhum pedido.</p>
+  }
+
+  @for (pedido of pedidos; track pedido.idAtendimento) {
+
+    <article class="pedido-card">
+
+      <div class="pedido-cabecalho">
+        <h2>Pedido #{{ pedido.idAtendimento }}</h2>
+
+        <span class="status">
+          {{ descricaoStatus(pedido.statusAtendimento) }}
+        </span>
+      </div>
+
+      <p>
+        Data:
+        {{ pedido.dataAtendimento | date:'dd/MM/yyyy' }}
+      </p>
+
+      <h3>Itens do pedido</h3>
+
+      @for (item of pedido.itens; track item.idItem) {
+        <div class="item">
+          <span>
+            {{ item.quantidade }}x {{ item.item }}
+          </span>
+
+          <strong>
+            {{
+              item.quantidade * item.valorUnitario
+                | currency:'BRL'
+            }}
+          </strong>
+        </div>
+      }
+
+      <div class="total">
+        <strong>Total:</strong>
+        <strong>
+          {{ calcularTotal(pedido) | currency:'BRL' }}
+        </strong>
+      </div>
+
+    </article>
+  }
+
+</section>

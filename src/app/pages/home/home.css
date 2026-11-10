@@ -1,0 +1,160 @@
+
+:host {
+  display: block;
+  font-family: Arial, sans-serif;
+  color: #1e293b;
+}
+
+.home {
+  width: 100%;
+}
+
+.hero {
+  background: linear-gradient(135deg, #172337, #304663);
+  color: white;
+  padding: 100px 24px;
+  text-align: center;
+  border-radius: 0 0 28px 28px;
+}
+
+.hero-conteudo {
+  max-width: 760px;
+  margin: auto;
+}
+
+.etiqueta {
+  display: inline-block;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 30px;
+  padding: 9px 18px;
+  font-size: 14px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 5vw, 54px);
+  margin: 24px 0;
+}
+
+.hero p {
+  font-size: 18px;
+  line-height: 1.7;
+  color: #dce5f0;
+}
+
+.hero-botoes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.btn-principal,
+.btn-secundario {
+  display: inline-block;
+  padding: 14px 24px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: transform 0.2s;
+}
+
+.btn-principal {
+  background: #22c55e;
+  color: #10251a;
+}
+
+.btn-secundario {
+  color: white;
+  border: 1px solid #94a3b8;
+}
+
+.btn-principal:hover,
+.btn-secundario:hover {
+  transform: translateY(-3px);
+}
+
+.recursos {
+  max-width: 1200px;
+  margin: auto;
+  padding: 75px 24px;
+}
+
+.secao-titulo {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.secao-titulo span {
+  color: #16a34a;
+  font-weight: bold;
+}
+
+.secao-titulo h2 {
+  font-size: 32px;
+}
+
+.secao-titulo p {
+  color: #64748b;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  padding: 30px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.04);
+}
+
+.icone {
+  font-size: 36px;
+}
+
+.card h3 {
+  margin-top: 20px;
+}
+
+.card p {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.card a {
+  color: #15803d;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.chamada {
+  text-align: center;
+  background: #f1f5f9;
+  padding: 65px 20px;
+  border-radius: 20px;
+  margin: 0 24px 30px;
+}
+
+.chamada p {
+  margin-bottom: 30px;
+  color: #64748b;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 65px 20px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .recursos {
+    padding: 45px 18px;
+  }
+}

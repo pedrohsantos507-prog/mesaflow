@@ -1,0 +1,44 @@
+<section class="detalhes-container">
+
+  <a routerLink="/produtos">Voltar ao catálogo</a>
+
+  @if (carregando()) {
+    <p>Carregando detalhes...</p>
+  }
+
+  @if (erro()) {
+    <p class="erro">{{ erro() }}</p>
+  }
+
+  @if (produto(); as item) {
+
+    <h2>{{ item.nome }}</h2>
+
+    <p>
+      <strong>Tipo:</strong>
+      {{ item.tipo === 'P' ? 'Produto' : 'Serviço' }}
+    </p>
+
+    <p>
+      <strong>Categoria:</strong>
+      {{ item.idCategoria }}
+    </p>
+
+    <p>
+      <strong>Descrição:</strong>
+      {{ item.descricao }}
+    </p>
+
+    <h3>{{ item.preco | currency:'BRL' }}</h3>
+
+    <button (click)="adicionarAoCarrinho()">
+      Adicionar ao carrinho
+    </button>
+
+    @if (mensagem()) {
+      <p>{{ mensagem() }}</p>
+    }
+
+  }
+
+</section>

@@ -1,0 +1,140 @@
+
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.produtos-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.produto-card {
+  width: 250px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.produto-card h3 {
+  color: #1e293b;
+}
+
+.produto-card p {
+  color: #64748b;
+}
+
+.produto-card strong {
+  display: block;
+  margin: 15px 0;
+  color: #16a34a;
+}
+
+.produto-card button {
+  width: 100%;
+  padding: 10px;
+  background-color: #0284c7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.produto-card button:hover {
+  background-color: #0369a1;
+}
+
+/* Área dos filtros */
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 16px;
+
+  padding: 24px;
+  margin: 24px 0;
+
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+}
+
+/* Campos */
+.campo-pesquisa {
+  flex: 2 1 240px;
+  min-width: 0;
+}
+
+.campo-filtro {
+  flex: 1 1 170px;
+  min-width: 0;
+}
+
+/* Títulos dos campos */
+.filtros label {
+  display: block;
+  margin-bottom: 8px;
+
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Pesquisa e seletores */
+.filtros input,
+.filtros select {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 13px 15px;
+  min-height: 46px;
+
+  border: 1px solid #cbd5e1;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #1e293b;
+
+  font-size: 14px;
+  font-family: inherit;
+
+  transition: border-color 0.2s,
+              box-shadow 0.2s;
+}
+
+/* Ao clicar no campo */
+.filtros input:focus,
+.filtros select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Placeholder */
+.filtros input::placeholder {
+  color: #94a3b8;
+}
+
+/* Cursor dos seletores */
+.filtros select {
+  cursor: pointer;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .filtros {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+  }
+
+  .campo-pesquisa,
+  .campo-filtro {
+    flex: auto;
+    width: 100%;
+  }
+}

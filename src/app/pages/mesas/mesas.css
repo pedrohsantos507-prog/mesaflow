@@ -1,0 +1,182 @@
+
+:host {
+  display: block;
+  font-family: Arial, sans-serif;
+  background: #f8fafc;
+  min-height: 100vh;
+}
+
+.painel-mesas {
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 24px;
+}
+
+.cabecalho {
+  margin-bottom: 30px;
+}
+
+.etiqueta {
+  color: #16a34a;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.cabecalho h1 {
+  color: #1e293b;
+  font-size: 34px;
+  margin: 10px 0;
+}
+
+.cabecalho p,
+.instrucao {
+  color: #64748b;
+}
+
+.resumo {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 45px;
+}
+
+.resumo-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.resumo-card span {
+  display: block;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.resumo-card strong {
+  display: block;
+  margin-top: 12px;
+  font-size: 34px;
+  color: #1e293b;
+}
+
+.resumo-card.livre strong {
+  color: #15803d;
+}
+
+.resumo-card.ocupada strong {
+  color: #dc2626;
+}
+
+.resumo-card.reservada strong {
+  color: #ca8a04;
+}
+
+.secao-mesas h2 {
+  color: #1e293b;
+}
+
+.grade-mesas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 25px;
+}
+
+.mesa-card {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px 16px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mesa-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.mesa-icone {
+  font-size: 36px;
+}
+
+.mesa-card h3 {
+  color: #1e293b;
+  margin-bottom: 8px;
+}
+
+.mesa-card p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.status {
+  display: inline-block;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+.mesa-livre {
+  border-color: #86efac;
+}
+
+.mesa-livre .status {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.mesa-ocupada {
+  border-color: #fca5a5;
+}
+
+.mesa-ocupada .status {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.mesa-reservada {
+  border-color: #fde047;
+}
+
+.mesa-reservada .status {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+.mesa-card button {
+  display: block;
+  width: 100%;
+  margin-top: 15px;
+  padding: 11px;
+  background: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mesa-card button:hover {
+  background: #334155;
+}
+
+@media (max-width: 900px) {
+  .resumo,
+  .grade-mesas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .painel-mesas {
+    padding: 24px 14px;
+  }
+
+  .resumo,
+  .grade-mesas {
+    grid-template-columns: 1fr;
+  }
+}

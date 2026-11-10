@@ -1,0 +1,42 @@
+
+<header>
+  <h1>MesaFlow</h1>
+
+  <nav>
+    <a routerLink="/home">Home</a>
+    <a routerLink="/produtos">Produtos</a>
+    <a routerLink="/carrinho">Carrinho</a>
+
+    @if (usuario()) {
+      <a routerLink="/meus-pedidos">Meus Pedidos</a>
+    }
+
+    @if (usuario()?.perfil === 'Admin') {
+      <a routerLink="/admin">Admin</a>
+      <a routerLink="/mesas">Mesas</a>
+    }
+
+    @if (!usuario()) {
+      <a routerLink="/login">Login</a>
+      <a routerLink="/cadastro">Cadastro</a>
+    } @else {
+      <span class="usuario-logado">
+        {{ usuario()?.nome }}
+        ({{ usuario()?.perfil }})
+      </span>
+
+      <button
+        type="button"
+        class="botao-sair"
+        [disabled]="saindo()"
+        (click)="sair()"
+      >
+        {{ saindo() ? 'Saindo...' : 'Sair' }}
+      </button>
+    }
+  </nav>
+</header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>

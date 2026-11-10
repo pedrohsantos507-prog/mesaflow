@@ -1,0 +1,115 @@
+
+.pagina-servicos {
+  max-width: 1200px;
+  margin: 35px auto;
+  padding: 20px;
+}
+
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.cabecalho h1 {
+  margin-bottom: 8px;
+}
+
+.cabecalho p {
+  color: #64748b;
+}
+
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.desativar {
+  background: #dc2626;
+}
+
+.formulario {
+  display: grid;
+  gap: 15px;
+  background: #f8fafc;
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.formulario label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+.pesquisa {
+  margin-bottom: 20px;
+}
+
+.tabela-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+th,
+td {
+  padding: 14px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: left;
+}
+
+th {
+  background: #f1f5f9;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+}
+
+.sucesso {
+  color: #15803d;
+  margin-bottom: 15px;
+}
+
+.erro {
+  color: #dc2626;
+  margin-bottom: 15px;
+}
+
+@media (max-width: 650px) {
+  .cabecalho {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .acoes {
+    flex-wrap: wrap;
+  }
+}

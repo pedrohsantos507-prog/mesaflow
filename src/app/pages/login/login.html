@@ -1,0 +1,59 @@
+
+<div class="login-container">
+
+  <h2>Login - MesaFlow</h2>
+
+  <form [formGroup]="formulario" (ngSubmit)="entrar()">
+
+    <label for="email">E-mail</label>
+
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      placeholder="Digite seu e-mail"
+    />
+
+    @if (
+      formulario.controls.email.touched &&
+      formulario.controls.email.invalid
+    ) {
+      <small class="erro">
+        Informe um e-mail válido.
+      </small>
+    }
+
+    <label for="senha">Senha</label>
+
+    <input
+      id="senha"
+      type="password"
+      formControlName="senha"
+      placeholder="Digite sua senha"
+    />
+
+    @if (
+      formulario.controls.senha.touched &&
+      formulario.controls.senha.invalid
+    ) {
+      <small class="erro">
+        A senha deve ter pelo menos 6 caracteres.
+      </small>
+    }
+
+    <button
+      type="submit"
+      [disabled]="carregando()"
+    >
+      {{ carregando() ? 'Entrando...' : 'Entrar' }}
+    </button>
+
+    @if (mensagem()) {
+      <p class="mensagem">
+        {{ mensagem() }}
+      </p>
+    }
+
+  </form>
+
+</div>

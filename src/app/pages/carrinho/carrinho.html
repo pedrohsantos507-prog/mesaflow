@@ -1,0 +1,84 @@
+
+<h2>Meu Carrinho</h2>
+
+@if (itens().length === 0) {
+  <p>Seu carrinho está vazio.</p>
+} @else {
+
+  @for (item of itens(); track item.produto.id) {
+
+    <div class="item-carrinho">
+
+      <h3>{{ item.produto.nome }}</h3>
+
+      <p>
+        Preço unitário:
+        {{ item.produto.preco | currency:'BRL' }}
+      </p>
+
+      <div class="quantidade">
+
+        <button
+          type="button"
+          (click)="diminuirQuantidade(item.produto.id)"
+          [disabled]="carregando() || item.quantidade <= 1">
+          -
+        </button>
+
+        <span>{{ item.quantidade }}</span>
+
+        <button
+          type="button"
+          (click)="aumentarQuantidade(item.produto.id)"
+          [disabled]="carregando()">
+          +
+        </button>
+
+      </div>
+
+      <p>
+        Subtotal:
+        {{ item.produto.preco * item.quantidade | currency:'BRL' }}
+      </p>
+
+      <button
+        type="button"
+        (click)="removerProduto(item.produto.id)"
+        [disabled]="carregando()">
+        Remover
+      </button>
+
+    </div>
+  }
+
+  <h3>
+    Total estimado: {{ total() | currency:'BRL' }}
+  </h3>
+
+  <button
+    type="button"
+    (click)="limparCarrinho()"
+    [disabled]="carregando()">
+    Limpar carrinho
+  </button>
+
+  <button
+    type="button"
+    (click)="finalizarPedido()"
+    [disabled]="carregando() || itens().length === 0"
+    class="botao-finalizar">
+    {{ carregando() ? 'Finalizando...' : 'Finalizar pedido' }}
+  </button>
+}
+
+@if (mensagem()) {
+  <p class="mensagem-sucesso" role="status">
+    {{ mensagem() }}
+  </p>
+}
+
+@if (erro()) {
+  <p class="mensagem-erro" role="alert">
+    {{ erro() }}
+  </p>
+}

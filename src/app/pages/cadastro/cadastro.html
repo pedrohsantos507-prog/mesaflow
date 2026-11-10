@@ -1,0 +1,146 @@
+
+<div class="cadastro-container">
+
+  <h2>Cadastro de Cliente</h2>
+
+  <form [formGroup]="formulario" (ngSubmit)="cadastrar()">
+
+    <h3>Dados pessoais</h3>
+
+    <label for="nome">Nome completo</label>
+    <input
+      id="nome"
+      type="text"
+      formControlName="nome"
+      placeholder="Digite seu nome completo"
+    />
+
+    <label for="cpf">CPF</label>
+    <input
+      id="cpf"
+      type="text"
+      formControlName="cpf"
+      placeholder="Digite seu CPF"
+      maxlength="11"
+    />
+
+    <label for="dataNascimento">Data de nascimento</label>
+    <input
+      id="dataNascimento"
+      type="date"
+      formControlName="dataNascimento"
+    />
+
+    <label for="sexo">Sexo</label>
+    <select id="sexo" formControlName="sexo">
+      <option value="">Selecione</option>
+      <option value="M">Masculino</option>
+      <option value="F">Feminino</option>
+    </select>
+
+    <label for="email">E-mail</label>
+    <input
+      id="email"
+      type="email"
+      formControlName="email"
+      placeholder="Digite seu e-mail"
+    />
+
+    <label for="telefone">Telefone</label>
+    <input
+      id="telefone"
+      type="tel"
+      formControlName="telefone"
+      placeholder="Digite seu telefone"
+    />
+
+    <h3>Endereço</h3>
+
+    <label for="cep">CEP</label>
+    <input
+      id="cep"
+      type="text"
+      formControlName="cep"
+      placeholder="Digite seu CEP"
+      maxlength="8"
+    />
+
+    <label for="numero">Número</label>
+    <input
+      id="numero"
+      type="text"
+      formControlName="numero"
+      placeholder="Número da residência"
+    />
+
+    <label for="complemento">Complemento</label>
+    <input
+      id="complemento"
+      type="text"
+      formControlName="complemento"
+      placeholder="Apartamento, bloco etc."
+    />
+
+    <h3>Dados de acesso</h3>
+
+    <label for="senha">Senha</label>
+    <input
+      id="senha"
+      type="password"
+      formControlName="senha"
+      placeholder="Crie uma senha com pelo menos 8 caracteres"
+      autocomplete="new-password"
+    />
+
+    @if (
+      formulario.controls.senha.touched &&
+      formulario.controls.senha.invalid
+    ) {
+      <small class="erro">
+        A senha deve ter pelo menos 8 caracteres.
+      </small>
+    }
+
+    <label for="confirmarSenha">Confirmar senha</label>
+    <input
+      id="confirmarSenha"
+      type="password"
+      formControlName="confirmarSenha"
+      placeholder="Digite novamente sua senha"
+      autocomplete="new-password"
+    />
+
+    @if (
+      formulario.controls.confirmarSenha.touched &&
+      formulario.controls.confirmarSenha.invalid
+    ) {
+      <small class="erro">
+        Confirme sua senha.
+      </small>
+    }
+
+    @if (
+      formulario.controls.confirmarSenha.touched &&
+      formulario.hasError('senhasDiferentes')
+    ) {
+      <small class="erro">
+        As senhas não coincidem.
+      </small>
+    }
+
+    <button
+      type="submit"
+      [disabled]="formulario.invalid || carregando()"
+    >
+      {{ carregando() ? 'Cadastrando...' : 'Cadastrar' }}
+    </button>
+
+    @if (mensagem()) {
+      <p class="mensagem">
+        {{ mensagem() }}
+      </p>
+    }
+
+  </form>
+
+</div>

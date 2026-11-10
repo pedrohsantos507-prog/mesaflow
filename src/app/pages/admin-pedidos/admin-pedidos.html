@@ -1,0 +1,136 @@
+<section class="pagina-pedidos">
+  <div class="cabecalho">
+    <div>
+      <h1>Gerenciamento de Pedidos</h1>
+      <p>Acompanhe os pedidos realizados no MesaFlow.</p>
+    </div>
+
+    <button type="button" (click)="carregar()">Atualizar pedidos</button>
+  </div>
+
+  @if (mensagem) {
+    <p class="sucesso">{{ mensagem }}</p>
+  }
+
+  @if (erro) {
+    <p class="erro">{{ erro }}</p>
+  }
+
+  <div class="filtros">
+    <label>
+      Pesquisar
+      <input type="search" [(ngModel)]="pesquisa" placeholder="Cliente ou número do pedido" />
+    </label>
+
+    <label>
+      Situação
+      <select [(ngModel)]="filtroStatus">
+        <option value="">Todos os status</option>
+        <option value="A">Aberto</option>
+        <option value="F">Finalizado</option>
+        <option value="C">Cancelado</option>
+      </select>
+    </label>
+  </div>
+
+  @if (carregando) {
+    <p>Carregando pedidos...</p>
+  } @else {
+    <div class="tabela-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Pedido</th>
+            <th>Cliente</th>
+            <th>Data</th>
+            <th>Situação</th>
+            <th>Total</th>
+            <th>Alterar status</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (pedido of pedidosFiltrados; track pedido.idAtendimento) {
+            <tr>
+              <td>#{{ pedido.idAtendimento }}</td>
+              <td>{{ pedido.nomePessoa }}</td>
+              <td>
+                {{ pedido.dataAtendimento | date: 'dd/MM/yyyy' : 'UTC' }}
+              </td>
+              <td>
+                @switch (pedido.statusAtendimento) {
+                  @case ('A') {
+                    Aberto
+                  }
+                  @case ('F') {
+                    Finalizado
+                  }
+                  @case ('C') {
+                    Cancelado
+                  }
+                  @default {
+                    {{ pedido.statusAtendimento }}
+                  }
+                }
+              </td>
+              <td>{{ total(pedido) | currency: 'BRL' }}</td>
+              <td>
+                <select
+                  #statusSelecionado
+                  [value]="pedido.statusAtendimento"
+                  [disabled]="salvandoId !== null"
+                  (change)="atualizarStatus(pedido, statusSelecionado.value)"
+                >
+                  <option value="A">Aberto</option>
+                  <option value="F">Finalizado</option>
+                  <option value="C" disabled>Cancelado (em desenvolvimento)</option>
+                </select>
+              </td>
+              <td>
+                <button type="button" (click)="visualizar(pedido)">Ver detalhes</button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7">Nenhum pedido encontrado.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  @if (pedidoSelecionado; as pedido) {
+    <div class="detalhes">
+      <div class="cabecalho-detalhes">
+        <h2>Pedido #{{ pedido.idAtendimento }}</h2>
+        <button type="button" (click)="fecharDetalhes()">Fechar</button>
+      </div>
+
+      <p><strong>Cliente:</strong> {{ pedido.nomePessoa }}</p>
+      <p>
+        <strong>Data:</strong>
+        {{ pedido.dataAtendimento | date: 'dd/MM/yyyy' : 'UTC' }}
+      </p>
+
+      <h3>Itens do pedido</h3>
+
+      @for (item of pedido.itens; track item.idItem) {
+        <div class="linha-item">
+          <span>{{ item.quantidade }}x {{ item.item }}</span>
+          <strong>
+            {{ item.quantidade * item.valorUnitario | currency: 'BRL' }}
+          </strong>
+        </div>
+      } @empty {
+        <p>Este pedido não possui itens cadastrados.</p>
+      }
+
+      <div class="total">
+        <strong>Total:</strong>
+        <strong>{{ total(pedido) | currency: 'BRL' }}</strong>
+      </div>
+    </div>
+  }
+</section>

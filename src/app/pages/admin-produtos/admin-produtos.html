@@ -1,0 +1,171 @@
+
+<main class="produtos-admin">
+
+  <h1>Gerenciamento de Produtos</h1>
+
+  <div class="barra">
+    <input
+      type="text"
+      placeholder="Pesquisar produto..."
+      [(ngModel)]="pesquisa"
+    />
+
+    <button type="button" (click)="novo()">
+      + Novo produto
+    </button>
+  </div>
+
+  @if (erro) {
+    <p class="erro">{{ erro }}</p>
+  }
+
+  @if (mensagem) {
+    <p class="sucesso">{{ mensagem }}</p>
+  }
+
+  @if (carregando) {
+    <p>Carregando produtos...</p>
+  }
+
+  @if (mostrarFormulario) {
+    <form (ngSubmit)="salvar()">
+
+      <h2>
+        {{ idEdicao === null
+          ? 'Cadastrar produto'
+          : 'Editar produto' }}
+      </h2>
+
+      <label>Nome</label>
+      <input
+        name="item"
+        [(ngModel)]="formulario.item"
+        required
+      />
+
+      <label>Descrição</label>
+      <textarea
+        name="descricao"
+        [(ngModel)]="formulario.descricaoItem"
+      ></textarea>
+
+      <label>ID da categoria</label>
+      <input
+        type="number"
+        name="categoria"
+        [(ngModel)]="formulario.idCategoria"
+        required
+      />
+
+      <label>Preço de custo</label>
+      <input
+        type="number"
+        name="preco"
+        step="0.01"
+        min="0"
+        [(ngModel)]="formulario.preco"
+      />
+
+      <label>Preço de venda</label>
+      <input
+        type="number"
+        name="precoVenda"
+        step="0.01"
+        min="0"
+        [(ngModel)]="formulario.precoVenda"
+      />
+
+      <label>Unidade</label>
+      <input
+        name="unidade"
+        [(ngModel)]="formulario.unidade"
+      />
+
+      <label>Situação</label>
+      <select
+        name="ativo"
+        [(ngModel)]="formulario.ativoProdutoServico"
+      >
+        <option value="A">Ativo (A)</option>
+        <option value="N">Inativo (N)</option>
+      </select>
+
+      <div class="acoes">
+        <button type="submit" [disabled]="salvando">
+          {{ salvando ? 'Salvando...' : 'Salvar' }}
+        </button>
+
+        <button
+          type="button"
+          (click)="mostrarFormulario = false"
+        >
+          Cancelar
+        </button>
+      </div>
+
+    </form>
+  }
+
+  <div class="tabela-container">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Produto</th>
+          <th>Preço</th>
+          <th>Situação</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (
+          produto of produtosFiltrados;
+          track produto.iditem
+        ) {
+          <tr>
+            <td>{{ produto.iditem }}</td>
+
+            <td>
+              {{ produto.iditemNavigation.item1 }}
+            </td>
+
+            <td>
+              {{ produto.precoVenda | currency:'BRL' }}
+            </td>
+
+            <td>
+              {{
+                produto.iditemNavigation
+                  .ativoProdutoServico
+              }}
+            </td>
+
+            <td>
+              <button
+                type="button"
+                (click)="editar(produto)"
+              >
+                Editar
+              </button>
+
+              <button
+                type="button"
+                (click)="desativar(produto)"
+              >
+                Desativar
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5">
+              Nenhum produto encontrado.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</main>

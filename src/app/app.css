@@ -1,0 +1,78 @@
+
+header {
+  background: #1e293b;
+  color: white;
+  text-align: center;
+  padding: 24px 16px;
+}
+
+header h1 {
+  margin: 0 0 20px;
+  font-size: 30px;
+  color: white;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+nav a:hover {
+  color: #93c5fd;
+}
+
+.usuario-logado {
+  color: #bfdbfe;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.botao-sair {
+  background: #dc2626;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.botao-sair:hover {
+  background: #b91c1c;
+}
+
+.botao-sair:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+main {
+  min-height: calc(100vh - 140px);
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 20px 12px;
+  }
+
+  nav {
+    gap: 12px;
+  }
+
+  nav a {
+    font-size: 14px;
+  }
+
+  .usuario-logado {
+    width: 100%;
+  }
+}

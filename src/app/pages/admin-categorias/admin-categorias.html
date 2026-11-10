@@ -1,0 +1,117 @@
+
+<section class="pagina-categorias">
+  <div class="cabecalho">
+    <div>
+      <h1>Gerenciamento de Categorias</h1>
+      <p>Organize as categorias do MesaFlow.</p>
+    </div>
+
+    <button type="button" (click)="novo()">
+      + Nova categoria
+    </button>
+  </div>
+
+  @if (mensagem) {
+    <p class="sucesso">{{ mensagem }}</p>
+  }
+
+  @if (erro) {
+    <p class="erro">{{ erro }}</p>
+  }
+
+  @if (mostrarFormulario) {
+    <form class="formulario" (ngSubmit)="salvar()">
+      <h2>
+        {{ idEdicao === null ? 'Nova categoria' : 'Editar categoria' }}
+      </h2>
+
+      <label for="nome">Nome da categoria</label>
+      <input
+        id="nome"
+        name="nome"
+        [(ngModel)]="formulario.nome"
+        placeholder="Ex.: Entradas"
+        required
+        maxlength="100"
+      />
+
+      <div class="acoes">
+        <button
+          type="submit"
+          [disabled]="salvando || !formulario.nome.trim()"
+        >
+          {{ salvando ? 'Salvando...' : 'Salvar' }}
+        </button>
+
+        <button
+          type="button"
+          class="secundario"
+          (click)="cancelar()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
+  }
+
+  <div class="pesquisa">
+    <input
+      type="search"
+      [(ngModel)]="pesquisa"
+      placeholder="Pesquisar categoria..."
+      aria-label="Pesquisar categoria"
+    />
+  </div>
+
+  @if (carregando) {
+    <p>Carregando categorias...</p>
+  } @else {
+    <div class="tabela-container">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Categoria</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (categoria of categoriasFiltradas; track categoria.idCategoria) {
+            <tr>
+              <td>{{ categoria.idCategoria }}</td>
+              <td>{{ categoria.nome }}</td>
+              <td>
+                <div class="acoes">
+                  <button
+                    type="button"
+                    (click)="editar(categoria)"
+                  >
+                    Editar
+                  </button>
+
+                  <button
+                    type="button"
+                    class="excluir"
+                    [disabled]="excluindoId !== null"
+                    (click)="excluir(categoria)"
+                  >
+                    {{ excluindoId === categoria.idCategoria
+                        ? 'Excluindo...'
+                        : 'Excluir' }}
+                  </button>
+                </div>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="3">
+                Nenhuma categoria encontrada.
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</section>

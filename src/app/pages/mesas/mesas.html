@@ -1,0 +1,77 @@
+
+<main class="painel-mesas">
+
+  <header class="cabecalho">
+    <div>
+      <span class="etiqueta">Gestão do salão</span>
+      <h1>Controle de Mesas</h1>
+      <p>Acompanhe a ocupação do restaurante.</p>
+    </div>
+  </header>
+
+  <section class="resumo">
+
+    <div class="resumo-card">
+      <span>Total de mesas</span>
+      <strong>{{ totalMesas() }}</strong>
+    </div>
+
+    <div class="resumo-card livre">
+      <span>Disponíveis</span>
+      <strong>{{ mesasLivres() }}</strong>
+    </div>
+
+    <div class="resumo-card ocupada">
+      <span>Ocupadas</span>
+      <strong>{{ mesasOcupadas() }}</strong>
+    </div>
+
+    <div class="resumo-card reservada">
+      <span>Reservadas</span>
+      <strong>{{ mesasReservadas() }}</strong>
+    </div>
+
+  </section>
+
+  <section class="secao-mesas">
+    <h2>Mesas do restaurante</h2>
+
+    <p class="instrucao">
+      Clique em "Alterar status" para simular
+      a movimentação de uma mesa.
+    </p>
+
+    <div class="grade-mesas">
+
+      @for (mesa of mesas(); track mesa.id) {
+
+        <article
+          class="mesa-card"
+          [class.mesa-livre]="mesa.status === 'Livre'"
+          [class.mesa-ocupada]="mesa.status === 'Ocupada'"
+          [class.mesa-reservada]="mesa.status === 'Reservada'"
+        >
+
+          <h3>Mesa {{ mesa.numero }}</h3>
+
+          <p>Capacidade: {{ mesa.capacidade }} pessoas</p>
+
+          <span class="status">
+            {{ mesa.status }}
+          </span>
+
+          <button
+            type="button"
+            (click)="alterarStatus(mesa.id)"
+          >
+            Alterar status
+          </button>
+
+        </article>
+
+      }
+
+    </div>
+  </section>
+
+</main>

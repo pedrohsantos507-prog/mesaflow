@@ -1,0 +1,167 @@
+<section class="estoque-container">
+  <!-- CABEÇALHO -->
+  <div class="cabecalho">
+    <div>
+      <h1>Gerenciamento de Estoque</h1>
+      <p>Consulte as quantidades disponíveis e registre entradas de mercadorias.</p>
+    </div>
+
+    <button type="button" (click)="carregar()" [disabled]="carregando">
+      {{ carregando ? 'Atualizando...' : 'Atualizar estoque' }}
+    </button>
+  </div>
+
+  <!-- MENSAGENS -->
+  @if (erro) {
+    <p class="erro">{{ erro }}</p>
+  }
+
+  @if (mensagem) {
+    <p class="mensagem-sucesso">{{ mensagem }}</p>
+  }
+
+  <!-- INDICADORES -->
+  <div class="indicadores">
+    <div class="indicador">
+      <span>Total de produtos</span>
+      <strong>{{ totalProdutos }}</strong>
+    </div>
+
+    <div class="indicador disponivel">
+      <span>Disponíveis</span>
+      <strong>{{ disponiveis }}</strong>
+    </div>
+
+    <div class="indicador baixo">
+      <span>Estoque baixo</span>
+      <strong>{{ estoqueBaixo }}</strong>
+    </div>
+
+    <div class="indicador esgotado">
+      <span>Esgotados</span>
+      <strong>{{ esgotados }}</strong>
+    </div>
+  </div>
+
+  <!-- CONSULTA DO ESTOQUE -->
+  <section class="consulta-estoque">
+    <h2>Estoque atual</h2>
+    <p>Quantidades disponíveis de cada produto.</p>
+
+    @if (carregando) {
+      <p>Carregando estoque...</p>
+    } @else {
+      <div class="tabela-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Produto</th>
+              <th>Quantidade</th>
+              <th>Preço de venda</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (produto of produtos; track produto.idItem) {
+              <tr>
+                <td>{{ produto.idItem }}</td>
+
+                <td>{{ produto.nome }}</td>
+
+                <td>
+                  <strong>{{ produto.quantidade }}</strong>
+                </td>
+
+                <td>
+                  {{ produto.precoVenda | currency: 'BRL' }}
+                </td>
+
+                <td>
+                  <span
+                    class="status"
+                    [class.status-disponivel]="produto.quantidade > 5"
+                    [class.status-baixo]="produto.quantidade > 0 && produto.quantidade <= 5"
+                    [class.status-esgotado]="produto.quantidade === 0"
+                  >
+                    {{ situacao(produto.quantidade) }}
+                  </span>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5">Nenhum produto encontrado.</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+
+  <!-- REGISTRO DE ENTRADA -->
+  <section class="formulario-entrada">
+    <h2>Registrar entrada de mercadoria</h2>
+
+    <p>Informe o produto recebido e os dados da entrada.</p>
+
+    <form (ngSubmit)="registrarEntrada()">
+      <div class="campos-entrada">
+        <label>
+          Produto
+
+          <select name="idProduto" [(ngModel)]="idProduto" required>
+            <option [ngValue]="0">Selecione um produto</option>
+
+            @for (produto of produtos; track produto.idItem) {
+              <option [ngValue]="produto.idItem">
+                {{ produto.nome }}
+              </option>
+            }
+          </select>
+        </label>
+
+        <label>
+          Quantidade recebida
+
+          <input
+            type="number"
+            name="quantidadeEntrada"
+            [(ngModel)]="quantidadeEntrada"
+            min="1"
+            step="1"
+            required
+          />
+        </label>
+
+        <label>
+          Valor unitário de custo (R$)
+
+          <input
+            type="number"
+            name="valorUnitario"
+            [(ngModel)]="valorUnitario"
+            min="0"
+            step="0.01"
+            required
+          />
+        </label>
+
+        <label>
+          Unidade
+
+          <select name="unidade" [(ngModel)]="unidade" required>
+            <option value="UN">Unidade (UN)</option>
+            <option value="KG">Quilograma (KG)</option>
+            <option value="CX">Caixa (CX)</option>
+          </select>
+        </label>
+      </div>
+
+      <button type="submit" [disabled]="salvando || carregando">
+        {{ salvando ? 'Registrando...' : 'Registrar entrada' }}
+      </button>
+    </form>
+  </section>
+</section>
