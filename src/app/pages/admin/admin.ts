@@ -107,6 +107,7 @@ export class Admin implements OnInit {
       titulo: 'Funcionários',
       descricao: 'Gerenciar funcionários cadastrados.',
       rota: '/funcionario',
+
     },
     {
       titulo: 'Mesas',

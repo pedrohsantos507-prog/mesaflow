@@ -36,6 +36,6 @@ export const routes: Routes = [
   {path: 'admin/categorias',component: AdminCategorias,},
   {path: 'admin/pedidos',component: AdminPedidos},
   {path: 'admin/estoque', component: AdminEstoque},
-  {path: 'funcionario', component: Funcionarios},
+  {path: 'funcionarios', component: Funcionarios},
   { path: '**', redirectTo: 'home' },
 ];
