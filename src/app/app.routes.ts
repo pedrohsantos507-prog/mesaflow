@@ -15,6 +15,8 @@ import { AdminServicos } from './pages/admin-servicos/admin-servicos';
 import { AdminCategorias } from './pages/admin-categorias/admin-categorias';
 import { AdminPedidos } from './pages/admin-pedidos/admin-pedidos';
 import { AdminEstoque } from './pages/admin-estoque/admin-estoque';
+import { Funcionarios } from './pages/admin/funcionarios/funcionarios';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -34,5 +36,6 @@ export const routes: Routes = [
   {path: 'admin/categorias',component: AdminCategorias,},
   {path: 'admin/pedidos',component: AdminPedidos},
   {path: 'admin/estoque', component: AdminEstoque},
+  {path: 'funcionario', component: Funcionarios},
   { path: '**', redirectTo: 'home' },
 ];

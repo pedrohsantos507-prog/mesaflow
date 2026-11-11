@@ -1,0 +1,62 @@
+
+<section class="pagina-funcionarios">
+
+  <div class="cabecalho">
+    <div>
+      <h1>Gerenciamento de Funcionários</h1>
+      <p>Consulte os funcionários cadastrados no MesaFlow.</p>
+    </div>
+
+    <button type="button" (click)="carregarFuncionarios()">
+      Atualizar lista
+    </button>
+  </div>
+
+  @if (carregando()) {
+    <p>Carregando funcionários...</p>
+  }
+
+  @if (erro()) {
+    <p class="mensagem-erro">{{ erro() }}</p>
+  }
+
+  @if (!carregando() && !erro()) {
+
+    @if (funcionarios().length === 0) {
+      <p>Nenhum funcionário cadastrado.</p>
+    } @else {
+
+      <div class="tabela-container">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Cargo</th>
+              <th>Admissão</th>
+              <th>Situação</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (funcionario of funcionarios(); track funcionario.idPessoa) {
+              <tr>
+                <td>{{ funcionario.idPessoa }}</td>
+                <td>{{ funcionario.pessoa.nome }}</td>
+                <td>{{ funcionario.pessoa.email }}</td>
+                <td>{{ funcionario.cargo }}</td>
+                <td>{{ funcionario.dataAdmissao | date:'dd/MM/yyyy':'UTC' }}</td>
+                <td>
+                  {{ funcionario.pessoa.ativoPessoa === 'A' ? 'Ativo' : 'Inativo' }}
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+    }
+  }
+
+</section>
