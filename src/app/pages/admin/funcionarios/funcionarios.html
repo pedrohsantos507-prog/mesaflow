@@ -2,33 +2,37 @@
   <div class="cabecalho">
     <div>
       <h1>Gerenciamento de Funcionários</h1>
-      <p>Consulte e cadastre funcionários do MesaFlow.</p>
+      <p>Consulte, cadastre, edite e exclua funcionários do MesaFlow.</p>
     </div>
 
     <div class="acoes">
       <button type="button" (click)="carregarFuncionarios()">Atualizar lista</button>
 
-      <button type="button" (click)="mostrarFormulario.set(!mostrarFormulario())">
+      <button type="button" (click)="novoFuncionario()">
         {{ mostrarFormulario() ? 'Cancelar' : 'Novo funcionário' }}
       </button>
     </div>
   </div>
 
+  <!-- MENSAGENS -->
   @if (mensagem()) {
-    <p class="mensagem-sucesso">{{ mensagem() }}</p>
+    <p class="mensagem-sucesso">
+      {{ mensagem() }}
+    </p>
   }
 
   @if (erro()) {
-    <p class="mensagem-erro">{{ erro() }}</p>
+    <p class="mensagem-erro">
+      {{ erro() }}
+    </p>
   }
 
+  <!-- FORMULÁRIO DE CADASTRO E EDIÇÃO -->
   @if (mostrarFormulario()) {
-    <form
-      [formGroup]="formulario"
-      (ngSubmit)="cadastrarFuncionario()"
-      class="formulario-funcionario"
-    >
-      <h2>Cadastrar funcionário</h2>
+    <form [formGroup]="formulario" (ngSubmit)="salvarFuncionario()" class="formulario-funcionario">
+      <h2>
+        {{ funcionarioEmEdicao() !== null ? 'Editar funcionário' : 'Cadastrar funcionário' }}
+      </h2>
 
       <h3>Dados pessoais</h3>
 
@@ -109,23 +113,37 @@
         </label>
       </div>
 
+      <!-- VALIDAÇÃO -->
       @if (formulario.invalid && formulario.touched) {
         <p class="mensagem-erro">
           Confira os campos obrigatórios e os formatos de CPF, e-mail e telefone.
         </p>
       }
 
-      <button type="submit" [disabled]="salvando()">
-        {{ salvando() ? 'Salvando...' : 'Cadastrar funcionário' }}
-      </button>
+      <!-- BOTÕES DO FORMULÁRIO -->
+      <div class="acoes">
+        <button type="submit" [disabled]="salvando()">
+          {{
+            salvando()
+              ? 'Salvando...'
+              : funcionarioEmEdicao() !== null
+                ? 'Salvar alterações'
+                : 'Cadastrar funcionário'
+          }}
+        </button>
+
+        <button type="button" (click)="novoFuncionario()" [disabled]="salvando()">Cancelar</button>
+      </div>
     </form>
   }
 
+  <!-- CARREGAMENTO -->
   @if (carregando()) {
     <p>Carregando funcionários...</p>
   }
 
-  @if (!carregando() && !erro()) {
+  <!-- LISTAGEM -->
+  @if (!carregando()) {
     @if (funcionarios().length === 0) {
       <p>Nenhum funcionário cadastrado.</p>
     } @else {
@@ -139,6 +157,7 @@
               <th>Cargo</th>
               <th>Admissão</th>
               <th>Situação</th>
+              <th>Ações</th>
             </tr>
           </thead>
 
@@ -146,14 +165,46 @@
             @for (funcionario of funcionarios(); track funcionario.idPessoa) {
               <tr>
                 <td>{{ funcionario.idPessoa }}</td>
-                <td>{{ funcionario.pessoa.nome }}</td>
-                <td>{{ funcionario.pessoa.email }}</td>
-                <td>{{ funcionario.cargo }}</td>
+
+                <td>
+                  {{ funcionario.pessoa.nome }}
+                </td>
+
+                <td>
+                  {{ funcionario.pessoa.email }}
+                </td>
+
+                <td>
+                  {{ funcionario.cargo }}
+                </td>
+
                 <td>
                   {{ funcionario.dataAdmissao | date: 'dd/MM/yyyy' : 'UTC' }}
                 </td>
+
                 <td>
                   {{ funcionario.pessoa.ativoPessoa === 'A' ? 'Ativo' : 'Inativo' }}
+                </td>
+
+                <!-- AÇÕES -->
+                <td>
+                  <div class="acoes">
+                    <button
+                      type="button"
+                      (click)="editarFuncionario(funcionario.idPessoa)"
+                      [disabled]="salvando() || excluindo() !== null"
+                    >
+                      Editar
+                    </button>
+
+                    <button
+                      type="button"
+                      (click)="excluirFuncionario(funcionario.idPessoa)"
+                      [disabled]="salvando() || excluindo() !== null"
+                    >
+                      {{ excluindo() === funcionario.idPessoa ? 'Excluindo...' : 'Excluir' }}
+                    </button>
+                  </div>
                 </td>
               </tr>
             }

@@ -1,34 +1,32 @@
-
 <main class="admin-container">
-
   <header class="admin-cabecalho">
     <div>
       <span class="etiqueta">MesaFlow • Gestão</span>
       <h1>Painel Administrativo</h1>
-      <p>
-        Gerencie as operações do restaurante
-        em um só lugar.
-      </p>
+      <p>Gerencie as operações do restaurante em um só lugar.</p>
     </div>
 
-    <span class="modo-demo">
-      Painel de gestão
-    </span>
+    <span class="modo-demo"> Painel de gestão </span>
   </header>
 
   <section class="secao-indicadores">
     <h2>Visão geral</h2>
+    @if (carregando) {
+      <p>Carregando indicadores...</p>
+    }
+
+    @if (erro) {
+      <p class="mensagem-erro">{{ erro }}</p>
+
+      <button type="button" (click)="carregarIndicadores()">Tentar novamente</button>
+    }
 
     <div class="grade-indicadores">
       @for (indicador of indicadores; track indicador.titulo) {
-        <article
-          class="indicador-card"
-          [class]="indicador.classe"
-        >
+        <article class="indicador-card" [class]="indicador.classe">
           <div class="indicador-topo">
             <span>{{ indicador.titulo }}</span>
-            <span class="indicador-icone">
-            </span>
+            <span class="indicador-icone"> </span>
           </div>
 
           <strong>{{ indicador.valor }}</strong>
@@ -45,41 +43,23 @@
     <div class="secao-titulo">
       <div>
         <h2>Gerenciamento</h2>
-        <p>
-          Acesse as principais áreas administrativas.
-        </p>
+        <p>Acesse as principais áreas administrativas.</p>
       </div>
     </div>
 
     <div class="grade-recursos">
       @for (recurso of recursos; track recurso.titulo) {
         <article class="recurso-card">
-
           <h3>{{ recurso.titulo }}</h3>
           <p>{{ recurso.descricao }}</p>
 
           @if (recurso.rota) {
-            <a [routerLink]="recurso.rota">
-              Acessar área →
-            </a>
+            <a [routerLink]="recurso.rota"> Acessar área → </a>
           } @else {
-            <span class="em-breve">
-              Em desenvolvimento
-            </span>
+            <span class="em-breve"> Em desenvolvimento </span>
           }
-
         </article>
       }
     </div>
   </section>
-
-  <section class="aviso">
-    <strong>Integração com o backend</strong>
-    <p>
-      Os módulos serão integrados à API ASP.NET Core
-      e ao banco de dados MySQL conforme
-      forem implementados e testados.
-    </p>
-  </section>
-
 </main>

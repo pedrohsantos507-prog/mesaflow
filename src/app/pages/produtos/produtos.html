@@ -32,6 +32,12 @@
       (ngModelChange)="categoriaSelecionada.set($event)"
     >
       <option value="Todas">Todas as categorias</option>
+
+      @for (categoria of categoriasComNome(); track categoria.idCategoria) {
+        <option [value]="categoria.idCategoria">
+          {{ categoria.nome }}
+        </option>
+      }
     </select>
   </div>
 </section>

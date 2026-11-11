@@ -1,9 +1,17 @@
+/* =========================================
+   CONTAINER PRINCIPAL
+========================================= */
 
 .estoque-container {
   max-width: 1200px;
   margin: 30px auto;
   padding: 20px;
+  color: #1e293b;
 }
+
+/* =========================================
+   CABEÇALHO
+========================================= */
 
 .cabecalho {
   display: flex;
@@ -23,19 +31,54 @@
   color: #64748b;
 }
 
-button {
-  background: #2563eb;
-  color: white;
+/* =========================================
+   BOTÕES GERAIS
+========================================= */
+
+.estoque-container button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-height: 40px;
+  padding: 10px 18px;
+
+  background-color: #2563eb;
+  color: #ffffff;
+
   border: none;
   border-radius: 8px;
-  padding: 12px 18px;
-  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 14px;
   font-weight: 600;
+  line-height: 1.4;
+
+  cursor: pointer;
+  white-space: nowrap;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 
-button:hover {
-  background: #1d4ed8;
+.estoque-container button:hover {
+  background-color: #1d4ed8;
 }
+
+.estoque-container button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.estoque-container button:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
+}
+
+/* =========================================
+   INDICADORES
+========================================= */
 
 .indicadores {
   display: grid;
@@ -45,7 +88,7 @@ button:hover {
 }
 
 .indicador {
-  background: white;
+  background: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 20px;
@@ -74,28 +117,44 @@ button:hover {
   border-left: 5px solid #dc2626;
 }
 
+/* =========================================
+   TABELA DE ESTOQUE
+========================================= */
+
 .tabela-container {
+  width: 100%;
   overflow-x: auto;
-  background: white;
+  background: #ffffff;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
 }
 
-table {
+.tabela-container table {
   width: 100%;
   border-collapse: collapse;
 }
 
-th, td {
+.tabela-container th,
+.tabela-container td {
   padding: 16px;
   text-align: left;
+  vertical-align: middle;
   border-bottom: 1px solid #e2e8f0;
 }
 
-th {
-  background: #f1f5f9;
+.tabela-container th {
+  background-color: #f1f5f9;
   color: #334155;
+  font-weight: 600;
 }
+
+.tabela-container tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+/* =========================================
+   SITUAÇÃO DO ESTOQUE
+========================================= */
 
 .status {
   display: inline-block;
@@ -103,45 +162,138 @@ th {
   border-radius: 20px;
   font-weight: 600;
   font-size: 13px;
+  white-space: nowrap;
 }
 
 .status-disponivel {
-  background: #dcfce7;
+  background-color: #dcfce7;
   color: #166534;
 }
 
 .status-baixo {
-  background: #fef3c7;
+  background-color: #fef3c7;
   color: #92400e;
 }
 
 .status-esgotado {
-  background: #fee2e2;
+  background-color: #fee2e2;
   color: #991b1b;
 }
 
-.erro {
-  color: #b91c1c;
-  margin-bottom: 16px;
+/* =========================================
+   BOTÃO VER DETALHES
+========================================= */
+
+.estoque-container .consulta-estoque button.btn-detalhes {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: auto;
+  min-width: 115px;
+  min-height: 40px;
+
+  padding: 10px 16px;
+
+  background-color: #1e293b;
+  color: #ffffff;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+
+  text-align: center;
+  white-space: nowrap;
+
+  border: none;
+  border-radius: 8px;
+
+  cursor: pointer;
 }
 
-@media (max-width: 600px) {
-  .estoque-container {
-    padding: 12px;
-  }
-
-  th, td {
-    padding: 10px;
-    font-size: 13px;
-  }
+.estoque-container .consulta-estoque button.btn-detalhes:hover {
+  background-color: #334155;
+  transform: translateY(-2px);
 }
+
+/* =========================================
+   DETALHES DO PRODUTO
+========================================= */
+
+.detalhes-estoque {
+  margin: 24px 0;
+  padding: 24px;
+
+  background-color: #f8fafc;
+  border: 1px solid #dce4ee;
+  border-radius: 12px;
+}
+
+.detalhes-estoque h2 {
+  color: #1e293b;
+  margin-bottom: 20px;
+}
+
+.detalhes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.detalhes-grid div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 16px;
+
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+}
+
+.detalhes-grid span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.detalhes-grid strong {
+  color: #1e293b;
+  font-size: 17px;
+  overflow-wrap: anywhere;
+}
+
+/* =========================================
+   BOTÃO FECHAR DETALHES
+========================================= */
+
+.estoque-container button.btn-fechar-detalhes {
+  margin-top: 20px;
+  padding: 10px 18px;
+
+  background-color: #1e293b;
+  color: #ffffff;
+
+  border: none;
+  border-radius: 8px;
+}
+
+.estoque-container button.btn-fechar-detalhes:hover {
+  background-color: #334155;
+}
+
+/* =========================================
+   FORMULÁRIO DE ENTRADA
+========================================= */
 
 .formulario-entrada {
   margin-top: 30px;
-  background: white;
+  padding: 24px;
+
+  background-color: #ffffff;
   border: 1px solid #e2e8f0;
   border-radius: 12px;
-  padding: 24px;
 }
 
 .formulario-entrada h2 {
@@ -156,10 +308,7 @@ th {
 
 .campos-entrada {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(200px, 1fr)
-  );
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 16px;
   margin-bottom: 20px;
 }
@@ -168,19 +317,85 @@ th {
   display: flex;
   flex-direction: column;
   gap: 8px;
+
   font-weight: 600;
   color: #334155;
 }
 
 .campos-entrada input,
 .campos-entrada select {
+  width: 100%;
+  box-sizing: border-box;
+
   padding: 11px;
+
   border: 1px solid #cbd5e1;
   border-radius: 8px;
+
   font-size: 15px;
+  background-color: #ffffff;
+  color: #1e293b;
+}
+
+.campos-entrada input:focus,
+.campos-entrada select:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #2563eb;
+}
+
+/* =========================================
+   MENSAGENS
+========================================= */
+
+.erro {
+  color: #b91c1c;
+  margin-bottom: 16px;
+  font-weight: 600;
 }
 
 .mensagem-sucesso {
-  color: #15803d !important;
+  color: #15803d;
   font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* =========================================
+   RESPONSIVIDADE
+========================================= */
+
+@media (max-width: 768px) {
+  .detalhes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cabecalho {
+    align-items: flex-start;
+  }
+
+  .formulario-entrada {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .estoque-container {
+    padding: 12px;
+    margin: 16px auto;
+  }
+
+  .tabela-container th,
+  .tabela-container td {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  .estoque-container .consulta-estoque button.btn-detalhes {
+    min-width: 100px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .indicador strong {
+    font-size: 26px;
+  }
 }

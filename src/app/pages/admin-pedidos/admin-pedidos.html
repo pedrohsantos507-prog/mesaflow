@@ -79,12 +79,13 @@
                 <select
                   #statusSelecionado
                   [value]="pedido.statusAtendimento"
-                  [disabled]="salvandoId !== null"
+                  [disabled]="salvandoId !== null || pedido.statusAtendimento === 'C'"
                   (change)="atualizarStatus(pedido, statusSelecionado.value)"
                 >
                   <option value="A">Aberto</option>
                   <option value="F">Finalizado</option>
-                  <option value="C" disabled>Cancelado (em desenvolvimento)</option>
+
+                  <option value="C" [disabled]="pedido.statusAtendimento !== 'A'">Cancelado</option>
                 </select>
               </td>
               <td>
@@ -118,7 +119,10 @@
 
       @for (item of pedido.itens; track item.idItem) {
         <div class="linha-item">
-          <span>{{ item.quantidade }}x {{ item.item }}</span>
+          <div>
+            <span>{{ item.quantidade }}x {{ item.item }}</span>
+            <p class="funcionario-item">Funcionário: {{ item.nomeFuncionario }}</p>
+          </div>
           <strong>
             {{ item.quantidade * item.valorUnitario | currency: 'BRL' }}
           </strong>
@@ -130,6 +134,44 @@
       <div class="total">
         <strong>Total:</strong>
         <strong>{{ total(pedido) | currency: 'BRL' }}</strong>
+      </div>
+
+      <div class="atribuicao-funcionario">
+        <h3>Funcionário responsável</h3>
+
+        <label for="funcionarioResponsavel"> Selecione o funcionário </label>
+
+        <select
+          id="funcionarioResponsavel"
+          [(ngModel)]="idFuncionarioSelecionado"
+          [disabled]="salvandoFuncionario || carregandoFuncionarios"
+        >
+          <option [ngValue]="null">Selecione um funcionário</option>
+
+          @for (funcionario of funcionarios; track funcionario.idPessoa) {
+            <option [ngValue]="funcionario.idPessoa">
+              {{ funcionario.pessoa.nome }} — {{ funcionario.cargo }}
+            </option>
+          }
+        </select>
+
+        @if (carregandoFuncionarios) {
+          <p>Carregando funcionários...</p>
+        }
+
+        @if (!carregandoFuncionarios && funcionarios.length === 0) {
+          <p>Nenhum funcionário disponível.</p>
+        }
+
+        <button
+          type="button"
+          (click)="atribuirFuncionario(pedido)"
+          [disabled]="
+            salvandoFuncionario || carregandoFuncionarios || idFuncionarioSelecionado === null
+          "
+        >
+          {{ salvandoFuncionario ? 'Salvando...' : 'Atribuir funcionário' }}
+        </button>
       </div>
     </div>
   }

@@ -22,6 +22,9 @@ export class AdminEstoque implements OnInit {
   erro = '';
   mensagem = '';
 
+  produtoSelecionado: ProdutoEstoque | null = null;
+  carregandoDetalhes = false;
+  erroDetalhes = '';
   // Dados do formulário
   idProduto = 0;
   quantidadeEntrada = 1;
@@ -133,5 +136,39 @@ export class AdminEstoque implements OnInit {
           this.cdr.detectChanges();
         },
       });
+  }
+
+  verDetalhes(id: number): void {
+    this.produtoSelecionado = null;
+    this.carregandoDetalhes = true;
+    this.erroDetalhes = '';
+
+    this.service.buscarPorId(id).subscribe({
+      next: (produto: ProdutoEstoque) => {
+        this.produtoSelecionado = produto;
+        this.carregandoDetalhes = false;
+        this.cdr.detectChanges();
+      },
+
+      error: (erro) => {
+        this.carregandoDetalhes = false;
+
+        this.erroDetalhes =
+          erro.status === 404
+            ? 'Produto não encontrado no estoque.'
+            : erro.status === 401
+              ? 'Faça login como administrador.'
+              : erro.status === 403
+                ? 'Acesso permitido somente para administradores.'
+                : 'Não foi possível consultar o produto.';
+
+        this.cdr.detectChanges();
+      },
+    });
+  }
+
+  fecharDetalhes(): void {
+    this.produtoSelecionado = null;
+    this.erroDetalhes = '';
   }
 }

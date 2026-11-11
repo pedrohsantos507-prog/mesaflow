@@ -19,6 +19,9 @@ export class AdminEstoqueService {
   listar(): Observable<ProdutoEstoque[]> {
     return this.http.get<ProdutoEstoque[]>(this.apiUrl);
   }
+  buscarPorId(id: number): Observable<ProdutoEstoque> {
+    return this.http.get<ProdutoEstoque>(`/api/Estoque/${id}`, { withCredentials: true });
+  }
 
   registrarEntrada(entrada: NovaEntradaProduto): Observable<unknown> {
     return this.http.get<{ token: string }>('/api/security/csrf').pipe(

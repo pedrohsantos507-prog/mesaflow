@@ -1,4 +1,3 @@
-
 .pagina-funcionarios {
   padding: 32px;
   max-width: 1250px;
@@ -29,6 +28,7 @@
 
 .acoes {
   display: flex;
+  align-items: center;
   gap: 12px;
   flex-wrap: wrap;
 }
@@ -40,11 +40,20 @@
   color: white;
   border: none;
   border-radius: 9px;
-  padding: 12px 20px;
+  padding: 0 20px;
+  min-height: 42px;
+  box-sizing: border-box;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.2;
 }
 
 .pagina-funcionarios button:hover:not(:disabled) {
@@ -111,7 +120,9 @@
   background: #fff;
   color: #263238;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .campos input:focus,
@@ -120,8 +131,22 @@
   box-shadow: 0 0 0 3px rgba(40, 115, 76, 0.12);
 }
 
-.formulario-funcionario button[type="submit"] {
+/* Botões do formulário */
+
+.formulario-funcionario .acoes {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-top: 26px;
+}
+
+.formulario-funcionario .acoes button {
+  height: 42px;
+  min-height: 42px;
+  margin: 0;
+  padding: 0 20px;
+  border-radius: 9px;
+  white-space: nowrap;
 }
 
 /* Mensagens */
@@ -220,5 +245,9 @@
 
   .acoes button {
     flex: 1;
+  }
+
+  .formulario-funcionario .acoes button {
+    padding: 0 12px;
   }
 }

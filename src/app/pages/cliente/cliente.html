@@ -1,6 +1,4 @@
-
 <section class="clientes-container">
-
   <h1>Clientes cadastrados</h1>
 
   @if (carregando) {
@@ -12,7 +10,6 @@
   }
 
   @if (!carregando && !erro) {
-
     <div class="tabela-container">
       <table>
         <thead>
@@ -22,6 +19,7 @@
             <th>E-mail</th>
             <th>Telefone</th>
             <th>Situação</th>
+            <th>Ações</th>
           </tr>
         </thead>
 
@@ -33,16 +31,55 @@
               <td>{{ pessoa.email }}</td>
               <td>{{ pessoa.telefone }}</td>
               <td>{{ pessoa.ativoPessoa }}</td>
+
+              <td>
+                <button type="button" class="btn-detalhes"(click)="verDetalhes(pessoa.idPessoa)">Ver detalhes</button>
+              </td>
             </tr>
           } @empty {
             <tr>
-              <td colspan="5">Nenhum cadastro encontrado.</td>
+              <td colspan="6">Nenhum cadastro encontrado.</td>
             </tr>
           }
         </tbody>
       </table>
     </div>
-
   }
 
+  @if (carregandoDetalhes) {
+    <p>Carregando detalhes do cliente...</p>
+  }
+
+  @if (erroDetalhes) {
+    <p class="erro">{{ erroDetalhes }}</p>
+  }
+
+  @if (clienteSelecionado; as cliente) {
+    <div class="detalhes-cliente">
+      <h2>Detalhes do cliente</h2>
+  
+      <p><strong>ID:</strong> {{ cliente.idPessoa }}</p>
+      <p><strong>Nome:</strong> {{ cliente.nome }}</p>
+      <p><strong>CPF:</strong> {{ cliente.cpf }}</p>
+      <p><strong>Nascimento:</strong> {{ cliente.dataNascimento }}</p>
+      <p><strong>Sexo:</strong> {{ cliente.sexo }}</p>
+      <p><strong>E-mail:</strong> {{ cliente.email }}</p>
+      <p><strong>Telefone:</strong> {{ cliente.telefone }}</p>
+      <p><strong>Situação:</strong> {{ cliente.ativoPessoa }}</p>
+
+      <h3>Endereços cadastrados</h3>
+
+      @for (endereco of cliente.enderecos; track endereco.idEndereco) {
+        <div class="endereco">
+          <p><strong>CEP:</strong> {{ endereco.cep }}</p>
+          <p><strong>Número:</strong> {{ endereco.numero }}</p>
+          <p><strong>Complemento:</strong> {{ endereco.complemento || 'Não informado' }}</p>
+        </div>
+      } @empty {
+        <p>Nenhum endereço cadastrado.</p>
+      }
+
+      <button type="button" (click)="fecharDetalhes()">Fechar detalhes</button>
+    </div>
+  }
 </section>

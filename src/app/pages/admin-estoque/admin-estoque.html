@@ -60,6 +60,7 @@
               <th>Quantidade</th>
               <th>Preço de venda</th>
               <th>Situação</th>
+              <th>Ações</th>
             </tr>
           </thead>
 
@@ -88,10 +89,15 @@
                     {{ situacao(produto.quantidade) }}
                   </span>
                 </td>
+                <td>
+                  <button type="button" class="btn-detalhes" (click)="verDetalhes(produto.idItem)">
+                    Ver detalhes
+                  </button>
+                </td>
               </tr>
             } @empty {
               <tr>
-                <td colspan="5">Nenhum produto encontrado.</td>
+                <td colspan="6">Nenhum produto encontrado.</td>
               </tr>
             }
           </tbody>
@@ -99,6 +105,52 @@
       </div>
     }
   </section>
+
+  <!-- CONSULTA INDIVIDUAL POR ID -->
+  @if (carregandoDetalhes) {
+    <p>Consultando produto...</p>
+  }
+
+  @if (erroDetalhes) {
+    <p class="erro">{{ erroDetalhes }}</p>
+  }
+
+  @if (produtoSelecionado; as produto) {
+    <section class="detalhes-estoque">
+      <h2>Detalhes do produto</h2>
+
+      <div class="detalhes-grid">
+        <div>
+          <span>ID do produto</span>
+          <strong>{{ produto.idItem }}</strong>
+        </div>
+
+        <div>
+          <span>Nome</span>
+          <strong>{{ produto.nome }}</strong>
+        </div>
+
+        <div>
+          <span>Quantidade em estoque</span>
+          <strong>{{ produto.quantidade }}</strong>
+        </div>
+
+        <div>
+          <span>Preço de venda</span>
+          <strong>{{ produto.precoVenda | currency: 'BRL' }}</strong>
+        </div>
+
+        <div>
+          <span>Situação</span>
+          <strong>{{ situacao(produto.quantidade) }}</strong>
+        </div>
+      </div>
+
+      <button type="button" class="btn-fechar-detalhes" (click)="fecharDetalhes()">
+        Fechar detalhes
+      </button>
+    </section>
+  }
 
   <!-- REGISTRO DE ENTRADA -->
   <section class="formulario-entrada">
