@@ -23,4 +23,8 @@ export class PessoaService {
   buscarPorId(id: number): Observable<Pessoa> {
     return this.http.get<Pessoa>(`${this.apiUrl}/${id}`);
   }
+
+  atualizar(id: number, pessoa: Pessoa): Observable<void> {
+    return this.http.put<void>(`/api/PessoaEndereco/${id}`, pessoa, { withCredentials: true });
+  }
 }

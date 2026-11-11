@@ -33,7 +33,13 @@
               <td>{{ pessoa.ativoPessoa }}</td>
 
               <td>
-                <button type="button" class="btn-detalhes"(click)="verDetalhes(pessoa.idPessoa)">Ver detalhes</button>
+                <button type="button" class="btn-detalhes" (click)="verDetalhes(pessoa.idPessoa)">
+                  Ver detalhes
+                </button>
+
+                <button type="button" class="btn-editar" (click)="editarCliente(pessoa.idPessoa)">
+                  Editar
+                </button>
               </td>
             </tr>
           } @empty {
@@ -44,6 +50,75 @@
         </tbody>
       </table>
     </div>
+  }
+
+  @if (carregandoEdicao) {
+    <p>Carregando formulário de edição...</p>
+  }
+
+  @if (erroEdicao) {
+    <p class="erro">{{ erroEdicao }}</p>
+  }
+
+  @if (mensagemEdicao) {
+    <p class="sucesso">{{ mensagemEdicao }}</p>
+  }
+
+  @if (clienteEmEdicao; as cliente) {
+    <section class="formulario-edicao">
+      <h2>Editar cliente</h2>
+
+      <form #formEdicao="ngForm">
+        <label for="nome">Nome completo</label>
+        <input id="nome" type="text" name="nome" [(ngModel)]="cliente.nome" required />
+
+        <label for="cpf">CPF</label>
+        <input
+          id="cpf"
+          type="text"
+          name="cpf"
+          [(ngModel)]="cliente.cpf"
+          minlength="11"
+          maxlength="11"
+          required
+        />
+
+        <label for="nascimento">Data de nascimento</label>
+        <input
+          id="nascimento"
+          type="date"
+          name="dataNascimento"
+          [(ngModel)]="cliente.dataNascimento"
+          required
+        />
+
+        <label for="sexo">Sexo</label>
+        <select id="sexo" name="sexo" [(ngModel)]="cliente.sexo" required>
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+        </select>
+
+        <label for="email">E-mail</label>
+        <input id="email" type="email" name="email" [(ngModel)]="cliente.email" required />
+
+        <label for="telefone">Telefone</label>
+        <input id="telefone" type="tel" name="telefone" [(ngModel)]="cliente.telefone" required />
+
+        <label for="situacao">Situação</label>
+        <select id="situacao" name="ativoPessoa" [(ngModel)]="cliente.ativoPessoa" required>
+          <option value="S">Ativo</option>
+          <option value="N">Inativo</option>
+        </select>
+
+        <div class="acoes-edicao">
+          <button type="button" (click)="cancelarEdicao()">Cancelar</button>
+
+          <button type="button" [disabled]="formEdicao.invalid || salvandoEdicao">
+            Salvar alterações
+          </button>
+        </div>
+      </form>
+    </section>
   }
 
   @if (carregandoDetalhes) {
@@ -57,7 +132,7 @@
   @if (clienteSelecionado; as cliente) {
     <div class="detalhes-cliente">
       <h2>Detalhes do cliente</h2>
-  
+
       <p><strong>ID:</strong> {{ cliente.idPessoa }}</p>
       <p><strong>Nome:</strong> {{ cliente.nome }}</p>
       <p><strong>CPF:</strong> {{ cliente.cpf }}</p>
