@@ -85,7 +85,7 @@ export class Admin {
     {
       titulo: 'Funcionários',
       descricao: 'Gerenciar funcionários cadastrados.',
-      rota: null
+      rota: '/funcionario'
     },
     {
       titulo: 'Mesas',

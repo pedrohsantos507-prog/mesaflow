@@ -24,3 +24,10 @@ export interface Funcionario {
     dataAdmissao:string;
     pessoa:PessoaFuncionario;
 }
+
+export interface FuncionarioCadastro {
+  idPessoa: number;
+  cargo: string;
+  dataAdmissao: string;
+  pessoa: PessoaFuncionario;
+}

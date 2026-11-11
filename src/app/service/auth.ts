@@ -27,20 +27,23 @@ export class AuthService {
   login(email: string, senha: string): Observable<LoginResposta> {
     return this.http.post<LoginResposta>(
       `${this.apiUrl}/login`,
-      { email, senha }
+      { email, senha },
+      { withCredentials: true }
     );
   }
 
   meuPerfil(): Observable<UsuarioAutenticado> {
     return this.http.get<UsuarioAutenticado>(
-      `${this.apiUrl}/me`
+      `${this.apiUrl}/me`,
+      { withCredentials: true }
     );
   }
 
   logout(): Observable<{ mensagem: string }> {
     return this.http.post<{ mensagem: string }>(
       `${this.apiUrl}/logout`,
-      {}
+      {},
+      { withCredentials: true }
     );
   }
 }

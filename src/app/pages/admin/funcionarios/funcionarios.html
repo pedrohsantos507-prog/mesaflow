@@ -1,31 +1,134 @@
-
 <section class="pagina-funcionarios">
-
   <div class="cabecalho">
     <div>
       <h1>Gerenciamento de Funcionários</h1>
-      <p>Consulte os funcionários cadastrados no MesaFlow.</p>
+      <p>Consulte e cadastre funcionários do MesaFlow.</p>
     </div>
 
-    <button type="button" (click)="carregarFuncionarios()">
-      Atualizar lista
-    </button>
+    <div class="acoes">
+      <button type="button" (click)="carregarFuncionarios()">Atualizar lista</button>
+
+      <button type="button" (click)="mostrarFormulario.set(!mostrarFormulario())">
+        {{ mostrarFormulario() ? 'Cancelar' : 'Novo funcionário' }}
+      </button>
+    </div>
   </div>
 
-  @if (carregando()) {
-    <p>Carregando funcionários...</p>
+  @if (mensagem()) {
+    <p class="mensagem-sucesso">{{ mensagem() }}</p>
   }
 
   @if (erro()) {
     <p class="mensagem-erro">{{ erro() }}</p>
   }
 
-  @if (!carregando() && !erro()) {
+  @if (mostrarFormulario()) {
+    <form
+      [formGroup]="formulario"
+      (ngSubmit)="cadastrarFuncionario()"
+      class="formulario-funcionario"
+    >
+      <h2>Cadastrar funcionário</h2>
 
+      <h3>Dados pessoais</h3>
+
+      <div class="campos">
+        <label>
+          Nome completo
+          <input type="text" formControlName="nome" />
+        </label>
+
+        <label>
+          CPF
+          <input type="text" formControlName="cpf" maxlength="11" />
+        </label>
+
+        <label>
+          Data de nascimento
+          <input type="date" formControlName="dataNascimento" />
+        </label>
+
+        <label>
+          Sexo
+          <select formControlName="sexo">
+            <option value="">Selecione</option>
+            <option value="M">Masculino</option>
+            <option value="F">Feminino</option>
+          </select>
+        </label>
+
+        <label>
+          E-mail
+          <input type="email" formControlName="email" />
+        </label>
+
+        <label>
+          Telefone
+          <input type="text" formControlName="telefone" />
+        </label>
+
+        <label>
+          Situação
+          <select formControlName="ativoPessoa">
+            <option value="A">Ativo</option>
+            <option value="I">Inativo</option>
+          </select>
+        </label>
+      </div>
+
+      <h3>Dados profissionais</h3>
+
+      <div class="campos">
+        <label>
+          Cargo
+          <input type="text" formControlName="cargo" />
+        </label>
+
+        <label>
+          Data de admissão
+          <input type="date" formControlName="dataAdmissao" />
+        </label>
+      </div>
+
+      <h3>Endereço</h3>
+
+      <div class="campos">
+        <label>
+          CEP
+          <input type="text" formControlName="cep" />
+        </label>
+
+        <label>
+          Número
+          <input type="text" formControlName="numero" />
+        </label>
+
+        <label>
+          Complemento
+          <input type="text" formControlName="complemento" />
+        </label>
+      </div>
+
+      @if (formulario.invalid && formulario.touched) {
+        <p class="mensagem-erro">
+          Confira os campos obrigatórios e os formatos de CPF, e-mail e telefone.
+        </p>
+      }
+
+      <button type="submit" [disabled]="salvando()">
+        {{ salvando() ? 'Salvando...' : 'Cadastrar funcionário' }}
+      </button>
+    </form>
+  }
+
+  @if (carregando()) {
+    <p>Carregando funcionários...</p>
+  }
+
+  @if (!carregando() && !erro()) {
     @if (funcionarios().length === 0) {
       <p>Nenhum funcionário cadastrado.</p>
     } @else {
-
       <div class="tabela-container">
         <table>
           <thead>
@@ -46,7 +149,9 @@
                 <td>{{ funcionario.pessoa.nome }}</td>
                 <td>{{ funcionario.pessoa.email }}</td>
                 <td>{{ funcionario.cargo }}</td>
-                <td>{{ funcionario.dataAdmissao | date:'dd/MM/yyyy':'UTC' }}</td>
+                <td>
+                  {{ funcionario.dataAdmissao | date: 'dd/MM/yyyy' : 'UTC' }}
+                </td>
                 <td>
                   {{ funcionario.pessoa.ativoPessoa === 'A' ? 'Ativo' : 'Inativo' }}
                 </td>
@@ -55,8 +160,6 @@
           </tbody>
         </table>
       </div>
-
     }
   }
-
 </section>

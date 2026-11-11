@@ -1,9 +1,12 @@
 
 .pagina-funcionarios {
-  padding: 24px;
-  max-width: 1200px;
+  padding: 32px;
+  max-width: 1250px;
   margin: 0 auto;
+  color: #263238;
 }
+
+/* Cabeçalho */
 
 .cabecalho {
   display: flex;
@@ -14,65 +17,208 @@
 }
 
 .cabecalho h1 {
-  margin-bottom: 8px;
-  color: #243b2a;
+  font-size: 28px;
+  margin: 0 0 8px;
+  color: #25352b;
 }
 
 .cabecalho p {
-  color: #64748b;
+  color: #6b7280;
+  margin: 0;
 }
 
-button {
-  padding: 12px 18px;
-  border: none;
-  border-radius: 8px;
-  background: #287a45;
+.acoes {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Botões */
+
+.pagina-funcionarios button {
+  background: #28734c;
   color: white;
+  border: none;
+  border-radius: 9px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
 }
 
-button:hover {
-  background: #1c5e33;
+.pagina-funcionarios button:hover:not(:disabled) {
+  background: #1c5638;
+  transform: translateY(-1px);
 }
 
-.tabela-container {
-  overflow-x: auto;
-  background: white;
-  border-radius: 12px;
+.pagina-funcionarios button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Formulário */
+
+.formulario-funcionario {
+  background: #ffffff;
   border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 5px 22px rgba(0, 0, 0, 0.05);
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
+.formulario-funcionario h2 {
+  font-size: 23px;
+  margin: 0 0 25px;
+  color: #25352b;
 }
 
-th, td {
-  padding: 16px;
+.formulario-funcionario h3 {
+  font-size: 17px;
+  color: #28734c;
+  margin: 28px 0 16px;
+  padding-bottom: 10px;
   border-bottom: 1px solid #e5e7eb;
 }
 
-th {
-  background: #f1f5f2;
-  color: #243b2a;
+/* Organização dos campos */
+
+.campos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
 }
 
-tbody tr:hover {
-  background: #f8faf9;
+.campos label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  min-width: 0;
+}
+
+.campos input,
+.campos select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  font-size: 14px;
+  background: #fff;
+  color: #263238;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.campos input:focus,
+.campos select:focus {
+  border-color: #28734c;
+  box-shadow: 0 0 0 3px rgba(40, 115, 76, 0.12);
+}
+
+.formulario-funcionario button[type="submit"] {
+  margin-top: 26px;
+}
+
+/* Mensagens */
+
+.mensagem-erro,
+.mensagem-sucesso {
+  padding: 14px 18px;
+  border-radius: 9px;
+  margin: 15px 0;
+  font-weight: 500;
 }
 
 .mensagem-erro {
-  color: #b91c1c;
+  background: #fff1f2;
+  color: #b42318;
+  border: 1px solid #fecdd3;
 }
 
-@media (max-width: 700px) {
-  .cabecalho {
-    flex-direction: column;
-    align-items: flex-start;
+.mensagem-sucesso {
+  background: #ecfdf3;
+  color: #16703d;
+  border: 1px solid #bbf7d0;
+}
+
+/* Tabela */
+
+.tabela-container {
+  width: 100%;
+  overflow-x: auto;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+}
+
+.tabela-container table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 750px;
+}
+
+.tabela-container th {
+  background: #edf5ef;
+  color: #24583a;
+  font-weight: 700;
+  text-align: left;
+  padding: 16px;
+  font-size: 14px;
+}
+
+.tabela-container td {
+  padding: 16px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.tabela-container tbody tr:hover {
+  background: #f7faf8;
+}
+
+/* Tablet */
+
+@media (max-width: 900px) {
+  .campos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .cabecalho {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* Celular */
+
+@media (max-width: 600px) {
   .pagina-funcionarios {
-    padding: 14px;
+    padding: 16px;
+  }
+
+  .cabecalho h1 {
+    font-size: 23px;
+  }
+
+  .campos {
+    grid-template-columns: 1fr;
+  }
+
+  .formulario-funcionario {
+    padding: 18px;
+  }
+
+  .acoes {
+    width: 100%;
+  }
+
+  .acoes button {
+    flex: 1;
   }
 }
